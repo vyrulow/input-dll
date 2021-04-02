@@ -15,6 +15,9 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_circus_CFunctions_injectMouseMovement
 	(JNIEnv*, jobject, jint x, jint y);
 
+	JNIEXPORT void JNICALL Java_circus_CFunctions_injectKeyboardInput
+	(JNIEnv*, jobject, jstring input);
+
 #ifdef __cplusplus
 }
 #endif
