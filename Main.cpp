@@ -14,17 +14,24 @@ JNIEXPORT void JNICALL Java_circus_CFunctions_injectMouseMovement
         printf("Couldn't find English Overwatch client.\n");
     }
     else {
-        // All reading is now done from OBS' Fullscreen Projector to bypass screenlock (nj blizzard!)
-        // Since that's the path I took, all this does is bring Overwatch to the foreground if it isn't,
-        // execute mouse events, then immediately swap OBS' Fullscreen Projection to the foreground to continue reading.
         if (obsHwnd != hWnd) {
             SetForegroundWindow(hWnd);
             SetCursorPos(x, y);
-            Sleep(10);
+            Sleep(25);
             mouse_event(MOUSEEVENTF_LEFTDOWN, x, y, 0, 0);
             mouse_event(MOUSEEVENTF_LEFTUP, x, y, 0, 0);
-            Sleep(10);
+            Sleep(25);
             SetForegroundWindow(obsHwnd);
         }
     }
+}
+
+JNIEXPORT void JNICALL Java_circus_CFunctions_injectKeyboardInput
+(JNIEnv*, jobject, jstring input)
+{
+    HWND hWnd = FindWindowA(NULL, "Overwatch");
+    if (!hWnd)
+        return;
+
+    SendMessage(hWnd, WM_SETTEXT, NULL, (LPARAM)input);
 }
